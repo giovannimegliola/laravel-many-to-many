@@ -45,6 +45,24 @@
             </div>
 
             <div class="mb-3">
+                <div class="form-group">
+                    <h6>Select Technologies</h6>
+                    @foreach ($technologies as $technology)
+                    <div class="form-check @error('technologies') is-invalid @enderror">
+                        @if($errors->any())
+                        <input type="checkbox" class="form-check-input" name="technologies[]" value="{{$technology->id}}" {{in_array($technologies->id, old('technologies', $project->technologies)) ? 'checked' : '' }} >
+                        @else
+                        <input type="checkbox" class="form-check-input" name="technologies[]" value="{{$technology->id}}" {{ $project->technologies->contains($technology->id) ? 'checked' : '' }} >
+                        @endif
+                        <label class="form-check-label">
+                            {{$technology->name}}
+                        </label>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="mb-3">
                 <label for="image">Image</label>
                 <input type="file" class="form-control @error('image') is-invalid @enderror" name="image" id="image" value="{{old('image', $project->image)}}">
                 @error('image')

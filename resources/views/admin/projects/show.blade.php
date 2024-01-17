@@ -2,11 +2,28 @@
 @section('content')
     <section class="container">
         <h1>{{$project->title}}</h1>
-        <div class="badge bg-secondary">
-            {{$project->category ? $project->category->name : 'Uncategorized'}}
-        </div>
+
+        @if($project->category_id)
+                <div class="mb-3">
+                    <h4>Category</h4>
+                    <a class="badge text-bg-secondary text-decoration-none" href="{{route('admin.categories.show', $project->category->slug)}}">{{$project->category->name}}</a>
+                </div>
+        @endif
+
         <p class="mt-4">{{$project->body}}</p>
+
         <img src="{{ asset('storage/' . $project->image)}}" alt="{{$project->title}}" class="w-50">
+
+
+        @if (count($project->technologies) > 0)
+        <div class="mb-3">
+            <h4>Technologies</h4>
+            @foreach ($project->technologies as $technology)
+            <a class="badge rounded-pill text-bg-success text-decoration-none" href="{{route('admin.technologies.show', $technology->slug)}}">{{$technology->name}}</a>
+            @endforeach
+        </div>
+
+        @endif
 
 
         <div class="my-3">

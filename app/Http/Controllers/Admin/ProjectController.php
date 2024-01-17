@@ -7,6 +7,7 @@ use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
 use App\Models\Category;
+use App\Models\Technology;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
@@ -27,7 +28,8 @@ class ProjectController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.projects.create', compact('categories'));
+        $technologies = Technology::all();
+        return view('admin.projects.create', compact('categories', 'technologies'));
     }
 
     /**
@@ -54,6 +56,10 @@ class ProjectController extends Controller
 
         $project = Project::create($formData);
 
+        if ($request->has('technologies')){
+            $project->technologies()->attach($request->technologies);
+        }
+
         return redirect()->route('admin.projects.show', $project->slug);
     }
 
@@ -71,7 +77,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $categories = Category::all();
-        return view('admin.projects.edit', compact('project','categories'));
+        $technologies = Technology::all();
+        return view('admin.projects.edit', compact('project','categories', 'technologies'));
     }
 
     /**
@@ -102,6 +109,14 @@ class ProjectController extends Controller
         }
 
         $project->update($formData);
+
+        if ($request->has('technologies')){
+            $project->technologies()->sync($request->technologies);
+        } else {
+            $project->technologies()->detach();
+        }
+
+
         return redirect()->route('admin.projects.show', $project->slug);
     }
 
@@ -110,7 +125,7 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-
+        $project->technologies()->detach();
         if ($project->image){
             Storage::delete($project->image);
         }

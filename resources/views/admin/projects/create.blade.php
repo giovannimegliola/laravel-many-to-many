@@ -2,6 +2,18 @@
 @section('content')
     <section class="container">
         <h1>Create new Project</h1>
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+                </ul>
+            </div>
+        @endif
+
+
         <form action="{{route('admin.projects.store')}}" enctype="multipart/form-data" method="POST">
             @csrf
 
@@ -35,6 +47,20 @@
                 @error('body')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
+            </div>
+
+            <div class="mb-3">
+                <div class="form-group">
+                    <h6>Select Technologies</h6>
+                    @foreach ($technologies as $technology)
+                    <div class="form-check @error('technologies') is-invalid @enderror">
+                        <input type="checkbox" class="form-check-input" name="technologies[]" value="{{$technology->id}}" {{ in_array($technology->id, old('technologies', [])) ? 'checked' : '' }} >
+                        <label class="form-check-label">
+                            {{$technology->name}}
+                        </label>
+                    </div>
+                    @endforeach
+                </div>
             </div>
 
 
