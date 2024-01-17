@@ -13,7 +13,6 @@
             </div>
         @endif
 
-
         <form action="{{route('admin.projects.store')}}" enctype="multipart/form-data" method="POST">
             @csrf
 
@@ -62,7 +61,6 @@
                     @endforeach
                 </div>
             </div>
-
 
             <div class="me-3">
                 <img id="uploadPreview" width="100" src="https://via.placeholder.com/300x200" >

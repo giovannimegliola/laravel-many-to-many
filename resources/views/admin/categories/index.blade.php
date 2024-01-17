@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <section class="container">
-        <h1>Categories List</h1>    {{-- cambia tutti i proeject con category --}}
+        <h1>Categories List</h1>
 
         <a href="{{route('admin.categories.create')}}" class="btn btn-primary my-3"><i class="fa-solid fa-plus"></i> Create new Category</a>
 
