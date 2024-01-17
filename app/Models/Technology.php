@@ -9,4 +9,8 @@ class Technology extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function projects(){
+        return $this->belongsToMany(Project::class);
+    }
 }
