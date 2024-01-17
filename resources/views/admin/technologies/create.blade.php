@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <section class="container">
-        <h1>Create new technology</h1>
+        <h1>Create new Technology</h1>
         <form action="{{route('admin.technologies.store')}}" method="POST">
             @csrf
 

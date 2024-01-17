@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <section class="container">
-        <h1>technologies List</h1>    {{-- cambia tutti i proeject con technology --}}
+        <h1>Technologies List</h1>    {{-- cambia tutti i proeject con technology --}}
 
         <a href="{{route('admin.technologies.create')}}" class="btn btn-primary my-3"><i class="fa-solid fa-plus"></i> Create new technology</a>
 
