@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
 
         // $this->call([
         //     ProjectSeeder::class,
-        //     //altri seeder
+        //     CategorySeeder::class,
+        //     TechnologySeeder::class
 
         // ]); per fare il seeder di tutte le tabelle
     }
