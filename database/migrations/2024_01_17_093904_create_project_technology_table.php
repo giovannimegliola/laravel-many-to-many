@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('technology_id');
             $table->foreign('technology_id')->references('id')->on('technologies')->cascadeOnDelete();
 
-            //$table->primary(['project_id', 'technology_id']); //forma canonica per relazioni many-to-many
+            //$table->primary(['project_id', 'technology_id']); //forma canonica per relazioni many-to-many,e posso eslcudere timestamps()
             $table->timestamps();
         });
     }

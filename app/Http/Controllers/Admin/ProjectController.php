@@ -18,7 +18,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
+        $projects = Project::paginate(3); //paginate(n) al posto di all() per visualizzare n risultati per pagina
         return view('admin.projects.index', compact('projects'));
     }
 

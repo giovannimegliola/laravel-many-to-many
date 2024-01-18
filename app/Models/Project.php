@@ -22,7 +22,7 @@ class Project extends Model
     }
 
     public function technologies(){
-        return $this->belongsToMany(Technology::class);
+        return $this->belongsToMany(Technology::class)->withTimestamps(); //se voglio aggiungere un altro campo nella tabella pivot ->withPivot('vote')
     }
 
     public static function getSlug($title)

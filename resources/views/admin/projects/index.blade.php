@@ -35,6 +35,8 @@
                 </tbody>
 
             </table>
+            {{$projects->links('vendor.pagination.bootstrap-5')}} {{-- pagination  --}}
+
         </div>
 
         @include('profile/partials.modal_delete')
