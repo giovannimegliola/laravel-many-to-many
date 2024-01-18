@@ -10,6 +10,10 @@ use App\Models\Category;
 use App\Models\Technology;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+
+
+
 
 class ProjectController extends Controller
 {
@@ -18,7 +22,13 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::paginate(3); //paginate(n) al posto di all() per visualizzare n risultati per pagina
+        $currentUserId= Auth::id(); //per evitare di far vedere post a utenti diversi
+        if($currentUserId == 1){
+            $projects = Project::paginate(3);
+        } else {
+            $projects = Project::where('user_id', $currentUserId)->paginate(3); //paginate(n) al posto di all() per visualizzare n risultati per pagina
+        }
+
         return view('admin.projects.index', compact('projects'));
     }
 
@@ -47,8 +57,6 @@ class ProjectController extends Controller
         //aggiungiamo l'id dell'utente
         $formData['user_id'] = $userId;
 
-
-
         if ($request->hasFile('image')) {
             $path = Storage::put('images', $request->image);
             $formData['image'] = $path;
@@ -68,7 +76,13 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return view('admin.projects.show',compact('project'));
+        $currentUserId= Auth::id();
+        if(Auth::id()== $project->user_id || $currentUserId ==1) {
+            return view('admin.projects.show',compact('project'));
+        } else {
+            abort(403);
+        }
+
     }
 
     /**
@@ -76,6 +90,10 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $currentUserId= Auth::id();
+        if($currentUserId != $project->user_id && $currentUserId !=1) {
+            abort(403);
+        }
         $categories = Category::all();
         $technologies = Technology::all();
         return view('admin.projects.edit', compact('project','categories', 'technologies'));

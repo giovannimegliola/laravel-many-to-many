@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -25,6 +26,10 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        $currentUserId= Auth::id();     //solo l'admin può creare le categorie
+        if($currentUserId !=1) {
+            abort(403);
+        }
          return view('admin.categories.create');
     }
 
@@ -55,6 +60,10 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
+        $currentUserId= Auth::id();     //solo l'admin può editare le categorie
+        if($currentUserId !=1) {
+            abort(403);
+        }
         return view('admin.categories.edit', compact('category'));
     }
 
@@ -80,6 +89,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        $currentUserId= Auth::id();     //solo l'admin può eliminare le categorie
+        if($currentUserId !=1) {
+            abort(403);
+        }
         $category->delete();
         return to_route('admin.categories.index')->with('message', "$category->name eliminato con successo");
     }
