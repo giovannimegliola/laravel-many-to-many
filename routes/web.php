@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\TechnologyController;
 
+use App\Http\Controllers\UserController;
 use App\Models\Category;
 use App\Models\Technology;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,8 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
+Route::get('/users', [UserController::class, 'index']);
 
 Route::fallback(function () {
     return redirect()->route('admin.dashboard');
